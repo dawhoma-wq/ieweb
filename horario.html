@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Horario académico semanal por grado y sección con exportación a PDF y Excel." />
+  <meta name="theme-color" content="#1d4ed8" />
+  <meta name="color-scheme" content="light" />
+  <title>Horario | Sistema Docente Primaria</title>
+  <link rel="icon" type="image/svg+xml" href="imagenes/favicon.svg" />
+  <link rel="apple-touch-icon" href="imagenes/fatima.svg" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <h2>Panel Docente</h2>
+        <p>Gestión académica de nivel primaria</p>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn-primary" href="configuracion.html"><i class="fa-solid fa-gear"></i>Configuración</a>
+        <a class="btn-danger logout-link" href="index.html"><i class="fa-solid fa-right-from-bracket"></i>Salir del sistema</a>
+      </div>
+    </header>
+
+    <nav class="menu-horizontal">
+      <a class="menu-item" href="principal.html"><i class="fa-solid fa-house"></i>Principal</a>
+      <a class="menu-item" href="estudiantes.html"><i class="fa-solid fa-user-graduate"></i>Estudiantes</a>
+      <a class="menu-item active" href="horario.html"><i class="fa-solid fa-calendar-days"></i>Horario</a>
+      <a class="menu-item" href="asistencia.html"><i class="fa-solid fa-clipboard-check"></i>Asistencia</a>
+      <a class="menu-item" href="calificaciones.html"><i class="fa-solid fa-square-poll-vertical"></i>Calificaciones</a>
+      <a class="menu-item" href="incidencias.html"><i class="fa-solid fa-triangle-exclamation"></i>Registro de Incidencias</a>
+    </nav>
+
+    <main class="content">
+      <h3>Horario</h3>
+      <div class="section-toolbar">
+        <p>Registro de sesiones por area curricular</p>
+        <div class="topbar-actions">
+          <button type="button" class="btn-primary" id="exportSchedulePdfBtn"><i class="fa-solid fa-file-pdf"></i>Exportar PDF</button>
+          <button type="button" class="btn-primary" id="exportScheduleExcelBtn"><i class="fa-solid fa-file-excel"></i>Exportar Excel</button>
+        </div>
+      </div>
+      <div class="form-card">
+        <form id="scheduleForm" class="student-form-grid">
+          <div class="form-group">
+            <label for="startTime">Hora de inicio</label>
+            <input id="startTime" type="time" required />
+          </div>
+          <div class="form-group">
+            <label for="endTime">Hora de fin</label>
+            <input id="endTime" type="time" required />
+          </div>
+          <div class="form-group">
+            <label for="curricularArea">Area curricular</label>
+            <input id="curricularArea" placeholder="Ejemplo: Matematicas" required />
+          </div>
+          <div class="form-group">
+            <label for="scheduleGrade">Grado</label>
+            <select id="scheduleGrade" required>
+              <option value="">Seleccionar</option>
+              <option>1°</option>
+              <option>2°</option>
+              <option>3°</option>
+              <option>4°</option>
+              <option>5°</option>
+              <option>6°</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="scheduleSection">Seccion</label>
+            <select id="scheduleSection" required>
+              <option value="">Seleccionar</option>
+              <option>A</option>
+              <option>B</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary" id="saveScheduleBtn"><i class="fa-solid fa-plus"></i>Agregar al horario</button>
+        </form>
+      </div>
+
+      <div class="table-card">
+        <table id="scheduleTable">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Hora de inicio</th>
+              <th>Hora de fin</th>
+              <th>Area curricular</th>
+              <th>Grado</th>
+              <th>Seccion</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleTbody"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

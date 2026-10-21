@@ -1,0 +1,27 @@
+{
+  "name": "Sistema Docente Primaria",
+  "short_name": "Sistema Docente",
+  "description": "Panel docente para gestión académica de educación primaria: estudiantes, asistencia, calificaciones CNEB, incidencias y reportes profesionales en PDF/Excel.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f172a",
+  "theme_color": "#1d4ed8",
+  "lang": "es-PE",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "imagenes/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "imagenes/fatima.svg",
+      "sizes": "256x256",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

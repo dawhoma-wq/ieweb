@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Panel principal del sistema docente: indicadores de asistencia, calificaciones e incidencias en tiempo real." />
+  <meta name="theme-color" content="#1d4ed8" />
+  <meta name="color-scheme" content="light" />
+  <title>Principal | Sistema Docente Primaria</title>
+  <link rel="icon" type="image/svg+xml" href="imagenes/favicon.svg" />
+  <link rel="apple-touch-icon" href="imagenes/fatima.svg" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <h2>Panel Docente</h2>
+        <p>Gestión académica de nivel primaria</p>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn-primary" href="configuracion.html"><i class="fa-solid fa-gear"></i>Configuración</a>
+        <a class="btn-danger logout-link" href="index.html"><i class="fa-solid fa-right-from-bracket"></i>Salir del sistema</a>
+      </div>
+    </header>
+
+    <nav class="menu-horizontal">
+      <a class="menu-item active" href="principal.html"><i class="fa-solid fa-house"></i>Principal</a>
+      <a class="menu-item" href="estudiantes.html"><i class="fa-solid fa-user-graduate"></i>Estudiantes</a>
+      <a class="menu-item" href="horario.html"><i class="fa-solid fa-calendar-days"></i>Horario</a>
+      <a class="menu-item" href="asistencia.html"><i class="fa-solid fa-clipboard-check"></i>Asistencia</a>
+      <a class="menu-item" href="calificaciones.html"><i class="fa-solid fa-square-poll-vertical"></i>Calificaciones</a>
+      <a class="menu-item" href="incidencias.html"><i class="fa-solid fa-triangle-exclamation"></i>Registro de Incidencias</a>
+    </nav>
+
+    <main class="content">
+      <h3>Principal</h3>
+      <div class="section-toolbar">
+        <p>Resumen estadístico por bimestre. Genere reportes consolidados automáticos en un clic.</p>
+        <div class="topbar-actions">
+          <label for="dashboardBimesterFilter">Bimestre:</label>
+          <select id="dashboardBimesterFilter">
+            <option value="auto">Actual (con datos más recientes)</option>
+            <option value="I">BIMESTRE I</option>
+            <option value="II">BIMESTRE II</option>
+            <option value="III">BIMESTRE III</option>
+            <option value="IV">BIMESTRE IV</option>
+          </select>
+          <button type="button" class="btn-primary" id="exportConsolidatedPdfBtn"><i class="fa-solid fa-file-pdf"></i>Reporte consolidado</button>
+        </div>
+      </div>
+      <div class="grid-cards">
+        <article class="card">
+          <h4>Total Estudiantes</h4>
+          <p class="metric" id="metric-estudiantes">0</p>
+          <span>Distribuidos en 4 grados</span>
+        </article>
+        <article class="card">
+          <h4>Asistencia de Hoy</h4>
+          <p class="metric" id="metric-asistencia">0%</p>
+          <span id="metric-asistencia-sub">Actualizado a primera hora</span>
+        </article>
+        <article class="card">
+          <h4>Incidencias del Mes</h4>
+          <p class="metric" id="metric-incidencias">0</p>
+          <span>Con seguimiento activo</span>
+        </article>
+        <article class="card">
+          <h4>Promedio General</h4>
+          <p class="metric" id="metric-promedio">0.0</p>
+          <span>Basado en calificaciones actuales</span>
+        </article>
+      </div>
+
+      <article class="card portals-card">
+        <h4><i class="fa-solid fa-graduation-cap"></i> Plataformas oficiales MINEDU</h4>
+        <p class="portals-card-intro">Accesos rápidos a los portales institucionales del Ministerio de Educación del Perú para el docente.</p>
+        <div class="portals-card-grid">
+          <a class="auth-portal auth-portal--perueduca" href="https://www.perueduca.pe/" target="_blank" rel="noopener noreferrer">
+            <span class="auth-portal-icon"><i class="fa-solid fa-chalkboard-user"></i></span>
+            <span class="auth-portal-text">
+              <strong>PerúEduca</strong>
+              <small>Aula virtual, recursos y formación docente</small>
+            </span>
+            <i class="fa-solid fa-arrow-up-right-from-square auth-portal-go"></i>
+          </a>
+          <a class="auth-portal auth-portal--sifods" href="https://sifods.minedu.gob.pe/" target="_blank" rel="noopener noreferrer">
+            <span class="auth-portal-icon"><i class="fa-solid fa-user-tie"></i></span>
+            <span class="auth-portal-text">
+              <strong>SIFODS</strong>
+              <small>Sistema de formación docente en servicio</small>
+            </span>
+            <i class="fa-solid fa-arrow-up-right-from-square auth-portal-go"></i>
+          </a>
+          <a class="auth-portal auth-portal--siagie" href="https://siagie.minedu.gob.pe/" target="_blank" rel="noopener noreferrer">
+            <span class="auth-portal-icon"><i class="fa-solid fa-database"></i></span>
+            <span class="auth-portal-text">
+              <strong>SIAGIE</strong>
+              <small>Sistema de información de apoyo a la gestión educativa</small>
+            </span>
+            <i class="fa-solid fa-arrow-up-right-from-square auth-portal-go"></i>
+          </a>
+          <a class="auth-portal auth-portal--minedu" href="https://www.gob.pe/minedu" target="_blank" rel="noopener noreferrer">
+            <span class="auth-portal-icon"><i class="fa-solid fa-landmark"></i></span>
+            <span class="auth-portal-text">
+              <strong>MINEDU</strong>
+              <small>Portal oficial del Ministerio de Educación</small>
+            </span>
+            <i class="fa-solid fa-arrow-up-right-from-square auth-portal-go"></i>
+          </a>
+        </div>
+      </article>
+
+      <div class="dashboard-grid">
+        <article class="card">
+          <h4>Estado de Asistencia</h4>
+          <div class="attendance-filters">
+            <div class="form-group">
+              <label for="dashboardAttendanceMonth">Mes</label>
+              <input type="month" id="dashboardAttendanceMonth" />
+            </div>
+            <div class="form-group">
+              <label for="dashboardAttendanceDay">Día</label>
+              <select id="dashboardAttendanceDay"></select>
+            </div>
+          </div>
+          <p id="asistencia-contexto" class="attendance-context">Sin datos del día seleccionado.</p>
+          <div class="donut-wrap">
+            <div class="donut-chart" id="asistencia-donut">
+              <span id="asistencia-donut-label">0%</span>
+            </div>
+            <div class="donut-legend">
+              <p><strong id="asistencia-presentes">0</strong> asistencias</p>
+              <p><strong id="asistencia-faltas">0</strong> faltas</p>
+              <p><strong id="asistencia-tardanzas">0</strong> tardanzas</p>
+              <p><strong id="asistencia-justificados">0</strong> justificadas</p>
+            </div>
+          </div>
+        </article>
+        <article class="card">
+          <h4>Rendimiento por Curso</h4>
+          <div id="rendimiento-barras" class="bars"></div>
+        </article>
+      </div>
+    </main>
+
+    <footer class="system-footer">
+      <p>Sistema Docente Primaria - Plataforma de gestion academica</p>
+      <p>Periodo 2026 | Desarrollado para uso institucional</p>
+    </footer>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

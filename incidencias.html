@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Registro de incidencias del aula con detalle por estudiante, fecha y reportes en PDF/Excel." />
+  <meta name="theme-color" content="#1d4ed8" />
+  <meta name="color-scheme" content="light" />
+  <title>Incidencias | Sistema Docente Primaria</title>
+  <link rel="icon" type="image/svg+xml" href="imagenes/favicon.svg" />
+  <link rel="apple-touch-icon" href="imagenes/fatima.svg" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="page-incidencias">
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <h2>Panel Docente</h2>
+        <p>Gestión académica de nivel primaria</p>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn-primary" href="configuracion.html"><i class="fa-solid fa-gear"></i>Configuración</a>
+        <a class="btn-danger logout-link" href="index.html"><i class="fa-solid fa-right-from-bracket"></i>Salir del sistema</a>
+      </div>
+    </header>
+
+    <nav class="menu-horizontal">
+      <a class="menu-item" href="principal.html"><i class="fa-solid fa-house"></i>Principal</a>
+      <a class="menu-item" href="estudiantes.html"><i class="fa-solid fa-user-graduate"></i>Estudiantes</a>
+      <a class="menu-item" href="horario.html"><i class="fa-solid fa-calendar-days"></i>Horario</a>
+      <a class="menu-item" href="asistencia.html"><i class="fa-solid fa-clipboard-check"></i>Asistencia</a>
+      <a class="menu-item" href="calificaciones.html"><i class="fa-solid fa-square-poll-vertical"></i>Calificaciones</a>
+      <a class="menu-item active" href="incidencias.html"><i class="fa-solid fa-triangle-exclamation"></i>Registro de Incidencias</a>
+    </nav>
+
+    <main class="content content-incidencias">
+      <h3>Registro de Incidencias</h3>
+      <div class="section-toolbar">
+        <p>Busqueda y registro de incidencias por estudiante. La firma del PDF usa el nombre del docente definido en Configuracion.</p>
+        <div class="topbar-actions">
+          <button type="button" class="btn-primary" id="exportIncidentsPdfBtn"><i class="fa-solid fa-file-pdf"></i>Exportar PDF</button>
+          <button type="button" class="btn-primary" id="exportIncidentsExcelBtn"><i class="fa-solid fa-file-excel"></i>Exportar Excel</button>
+        </div>
+      </div>
+
+      <div class="form-card incidents-form-card">
+        <form id="incidentForm" class="incident-form">
+          <div class="form-group">
+            <label for="incidentStudentSelector">Seleccionar estudiante</label>
+            <select id="incidentStudentSelector">
+              <option value="">Seleccione un estudiante</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="incidentDni">DNI</label>
+            <input id="incidentDni" type="text" maxlength="8" minlength="8" pattern="\d{8}" inputmode="numeric" placeholder="8 dígitos numéricos" required />
+          </div>
+          <div class="form-group">
+            <label for="incidentStudentName">Apellidos y nombres</label>
+            <input id="incidentStudentName" type="text" placeholder="Se completa desde el DNI" readonly />
+          </div>
+          <div class="form-group">
+            <label for="incidentGrade">Grado</label>
+            <input id="incidentGrade" type="text" placeholder="Se completa automaticamente" readonly />
+          </div>
+          <div class="form-group">
+            <label for="incidentSection">Seccion</label>
+            <input id="incidentSection" type="text" placeholder="Se completa automaticamente" readonly />
+          </div>
+          <div class="form-group">
+            <label for="incidentDate">Fecha</label>
+            <input id="incidentDate" type="date" required />
+          </div>
+          <div class="form-group incident-detail-group">
+            <label for="incidentDetail">Detalle</label>
+            <textarea id="incidentDetail" rows="6" wrap="soft" placeholder="Describa la incidencia" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary" id="saveIncidentBtn"><i class="fa-solid fa-floppy-disk"></i>Guardar incidencia</button>
+        </form>
+      </div>
+
+      <div class="table-card">
+        <table id="incidentsTable" class="incidents-table">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>DNI</th>
+              <th>Apellidos y nombres</th>
+              <th>Grado</th>
+              <th>Seccion</th>
+              <th>Fecha</th>
+              <th>Detalle de incidencia</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="incidentsTbody"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
