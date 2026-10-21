@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Registro mensual de asistencia con cálculo automático de porcentajes y reportes PDF/Excel." />
+  <meta name="theme-color" content="#1d4ed8" />
+  <meta name="color-scheme" content="light" />
+  <title>Asistencia | Sistema Docente Primaria</title>
+  <link rel="icon" type="image/svg+xml" href="imagenes/favicon.svg" />
+  <link rel="apple-touch-icon" href="imagenes/fatima.svg" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <h2>Panel Docente</h2>
+        <p>Gestión académica de nivel primaria</p>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn-primary" href="configuracion.html"><i class="fa-solid fa-gear"></i>Configuración</a>
+        <a class="btn-danger logout-link" href="index.html"><i class="fa-solid fa-right-from-bracket"></i>Salir del sistema</a>
+      </div>
+    </header>
+
+    <nav class="menu-horizontal">
+      <a class="menu-item" href="principal.html"><i class="fa-solid fa-house"></i>Principal</a>
+      <a class="menu-item" href="estudiantes.html"><i class="fa-solid fa-user-graduate"></i>Estudiantes</a>
+      <a class="menu-item" href="horario.html"><i class="fa-solid fa-calendar-days"></i>Horario</a>
+      <a class="menu-item active" href="asistencia.html"><i class="fa-solid fa-clipboard-check"></i>Asistencia</a>
+      <a class="menu-item" href="calificaciones.html"><i class="fa-solid fa-square-poll-vertical"></i>Calificaciones</a>
+      <a class="menu-item" href="incidencias.html"><i class="fa-solid fa-triangle-exclamation"></i>Registro de Incidencias</a>
+    </nav>
+
+    <main class="content">
+      <h3>Asistencia</h3>
+      <div class="section-toolbar">
+        <p>Registro mensual de asistencia por estudiante</p>
+        <div class="topbar-actions">
+          <input type="month" id="attendanceMonth" />
+          <button type="button" class="btn-primary" id="exportAttendancePdfBtn"><i class="fa-solid fa-file-pdf"></i>Exportar PDF</button>
+          <button type="button" class="btn-primary" id="exportAttendanceExcelBtn"><i class="fa-solid fa-file-excel"></i>Exportar Excel</button>
+          <button type="button" class="btn-primary" id="closeMonthBtn"><i class="fa-solid fa-lock"></i>Cerrar mes</button>
+          <button type="button" class="btn-primary" id="openMonthBtn"><i class="fa-solid fa-lock-open"></i>Reabrir mes</button>
+        </div>
+      </div>
+      <div class="form-card">
+        <p><strong>Leyenda para el docente:</strong> <strong>✓</strong> = Asistencia, <strong>F</strong> = Falta, <strong>T</strong> = Tardanza, <strong>J</strong> = Justificación.</p>
+      </div>
+
+      <div class="dashboard-grid">
+        <article class="metric-card">
+          <p>Total presentes (mes)</p>
+          <h4 id="attendanceMonthlyPresent">0</h4>
+        </article>
+        <article class="metric-card">
+          <p>Total tardanzas (mes)</p>
+          <h4 id="attendanceMonthlyLate">0</h4>
+        </article>
+        <article class="metric-card">
+          <p>Total faltas (mes)</p>
+          <h4 id="attendanceMonthlyAbsent">0</h4>
+        </article>
+        <article class="metric-card">
+          <p>Total justificaciones (mes)</p>
+          <h4 id="attendanceMonthlyJustified">0</h4>
+        </article>
+        <article class="metric-card">
+          <p>Asistencia mensual</p>
+          <h4 id="attendanceMonthlyRate">0%</h4>
+        </article>
+      </div>
+
+      <div class="table-card">
+        <table id="attendanceTable">
+          <thead id="attendanceThead"></thead>
+          <tbody id="attendanceTbody"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

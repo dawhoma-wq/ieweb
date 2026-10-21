@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Registro de calificaciones por bimestre con áreas, competencias y promedios CNEB." />
+  <meta name="theme-color" content="#1d4ed8" />
+  <meta name="color-scheme" content="light" />
+  <title>Calificaciones CNEB | Sistema Docente Primaria</title>
+  <link rel="icon" type="image/svg+xml" href="imagenes/favicon.svg" />
+  <link rel="apple-touch-icon" href="imagenes/fatima.svg" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <h2>Panel Docente</h2>
+        <p>Gestión académica de nivel primaria</p>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn-primary" href="configuracion.html"><i class="fa-solid fa-gear"></i>Configuración</a>
+        <a class="btn-danger logout-link" href="index.html"><i class="fa-solid fa-right-from-bracket"></i>Salir del sistema</a>
+      </div>
+    </header>
+
+    <nav class="menu-horizontal">
+      <a class="menu-item" href="principal.html"><i class="fa-solid fa-house"></i>Principal</a>
+      <a class="menu-item" href="estudiantes.html"><i class="fa-solid fa-user-graduate"></i>Estudiantes</a>
+      <a class="menu-item" href="horario.html"><i class="fa-solid fa-calendar-days"></i>Horario</a>
+      <a class="menu-item" href="asistencia.html"><i class="fa-solid fa-clipboard-check"></i>Asistencia</a>
+      <a class="menu-item active" href="calificaciones.html"><i class="fa-solid fa-square-poll-vertical"></i>Calificaciones</a>
+      <a class="menu-item" href="incidencias.html"><i class="fa-solid fa-triangle-exclamation"></i>Registro de Incidencias</a>
+    </nav>
+
+    <main class="content">
+      <h3>Calificaciones — CNEB (Educación Primaria)</h3>
+      <div class="section-toolbar">
+        <div class="grades-toolbar-intro">
+          <p>
+            Registro por bimestre y áreas curriculares oficiales. Tres evaluaciones por competencia del área; dos valoraciones transversales (TIC y gestión del aprendizaje).
+            <strong class="grades-auto-save-inline">Los calificativos se guardan solos</strong> al elegir cada nota (en la memoria local de este navegador).
+          </p>
+          <p class="grades-students-hint">
+            <i class="fa-solid fa-user-graduate" aria-hidden="true"></i>
+            El listado de filas coincide con los estudiantes registrados en
+            <a href="estudiantes.html">Estudiantes</a>. Guarde allí las altas o cambios de matrícula antes de calificar aquí.
+          </p>
+        </div>
+        <div class="topbar-actions grades-toolbar-actions">
+          <button type="button" class="btn-primary" id="exportGradesPdfBtn"><i class="fa-solid fa-file-pdf"></i>Exportar PDF</button>
+          <button type="button" class="btn-primary" id="exportGradesExcelBtn"><i class="fa-solid fa-file-excel"></i>Exportar Excel</button>
+        </div>
+      </div>
+
+      <div class="form-card grades-bimester-bar">
+        <div class="grades-bimester-controls">
+          <div class="form-group grades-bimester-select">
+            <label for="bimesterSelect">Periodo lectivo</label>
+            <select id="bimesterSelect">
+              <option value="I">BIMESTRE I</option>
+              <option value="II">BIMESTRE II</option>
+              <option value="III">BIMESTRE III</option>
+              <option value="IV">BIMESTRE IV</option>
+            </select>
+          </div>
+          <p id="bimesterStatusText" class="grades-bimester-status" aria-live="polite"></p>
+          <div class="grades-bimester-actions">
+            <button type="button" class="btn-primary" id="closeBimesterBtn"><i class="fa-solid fa-lock"></i>Cerrar bimestre</button>
+            <button type="button" class="btn-outline hidden" id="reopenBimesterBtn"><i class="fa-solid fa-lock-open"></i>Reabrir bimestre</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grades-layout">
+        <aside class="form-card grades-area-panel" aria-label="Áreas curriculares">
+          <h4 class="grades-area-panel-title">Área curricular</h4>
+          <p class="grades-area-panel-hint">Seleccione un área para ver sus competencias.</p>
+          <ul id="areaList" class="area-list"></ul>
+        </aside>
+        <div class="grades-main-panel">
+          <div class="grades-selected-head">
+            <h4 id="selectedAreaTitle" class="grades-selected-title">—</h4>
+            <p id="selectedAreaSubtitle" class="grades-selected-subtitle hidden"></p>
+          </div>
+          <div class="table-card grades-table-scroll">
+            <table id="gradesTable" class="grades-table">
+              <thead id="gradesThead"></thead>
+              <tbody id="gradesTbody"></tbody>
+            </table>
+          </div>
+          <p id="gradesEmptyHint" class="grades-empty-hint hidden">Seleccione un área en la lista para comenzar el registro.</p>
+        </div>
+      </div>
+
+      <div class="form-card cneb-legend cneb-legend--grades-bottom" aria-label="Leyenda de calificativos">
+        <h4 class="cneb-legend-title">Escala de calificativos (valoración cualitativa)</h4>
+        <ul class="cneb-legend-list cneb-legend-list--long">
+          <li>
+            <strong>AD</strong> (Logro Destacado): El estudiante evidencia un nivel superior a lo esperado respecto a la competencia. Supera los aprendizajes previstos.
+          </li>
+          <li>
+            <strong>A</strong> (Logro Previsto): El estudiante demuestra el nivel esperado en relación con la competencia, cumpliendo con los estándares en el tiempo programado.
+          </li>
+          <li>
+            <strong>B</strong> (En Proceso): El estudiante está próximo o cerca de alcanzar el nivel esperado, para lo cual requiere acompañamiento durante un tiempo razonable.
+          </li>
+          <li>
+            <strong>C</strong> (En Inicio): El estudiante muestra un progreso mínimo o dificultades en el desarrollo de la competencia, necesitando mayor tiempo y acompañamiento docente.
+          </li>
+        </ul>
+        <p class="cneb-legend-note">
+          Elija <strong>bimestre</strong> y <strong>área curricular</strong> en la lista. Las competencias del área tienen <strong>tres columnas</strong> (evaluación 1, 2 y 3). Las
+          <strong>competencias transversales</strong> son dos por área: <strong>TIC</strong> (entornos virtuales) y <strong>Gest. ap.</strong> (gestión autónoma del aprendizaje), con
+          <strong>una valoración</strong> cada una. El registro es <strong>automático</strong> al cambiar cada calificativo (almacenamiento local del navegador).
+        </p>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
